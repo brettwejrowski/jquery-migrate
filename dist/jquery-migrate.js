@@ -78,7 +78,7 @@ jQuery.migrateReset = function() {
 function migrateNotify( msg ) {
 	if ( jQuery.migrateNotifications === true && typeof window !== "undefined" ) {
 		try {
-			jQuery( window ).trigger( EVENT_PREFIX + ":" + EVENTS.WARN, [ msg ] );
+			jQuery( window ).trigger( EVENT_PREFIX + ":" + EVENTS.WARN, [ msg, new Error( msg ) ] );
 		} catch ( _e ) {}
 	}
 }
