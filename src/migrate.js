@@ -28,6 +28,9 @@
 
 var warnedAbout = {};
 
+var EVENT_PREFIX = "jquery-migrate";
+var EVENTS = { WARN: "warn" };
+
 // List of warnings already given; public read only
 jQuery.migrateWarnings = [];
 
@@ -36,11 +39,24 @@ if ( jQuery.migrateTrace === undefined ) {
 	jQuery.migrateTrace = true;
 }
 
+// Set to false to disable traces that appear with warnings
+if ( jQuery.migrateNotifications === undefined ) {
+	jQuery.migrateNotifications = true;
+}
+
 // Forget any warnings we've already given; public
 jQuery.migrateReset = function() {
 	warnedAbout = {};
 	jQuery.migrateWarnings.length = 0;
 };
+
+function migrateNotify( msg ) {
+	if ( jQuery.migrateNotifications === true && typeof window !== "undefined" ) {
+		try {
+			jQuery( window ).trigger( EVENT_PREFIX + ":" + EVENTS.WARN, [ msg ] );
+		} catch ( _e ) {}
+	}
+}
 
 function migrateWarn( msg ) {
 	var console = window.console;
@@ -53,6 +69,7 @@ function migrateWarn( msg ) {
 				console.trace();
 			}
 		}
+		migrateNotify( msg );
 	}
 }
 

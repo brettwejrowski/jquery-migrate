@@ -68,6 +68,7 @@
 			"Dimensions",
 			"Effects",
 			"Event",
+			"Notify",
 			"Manipulation",
 			"Offset",
 			"Queue",
